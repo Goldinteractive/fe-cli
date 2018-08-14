@@ -5,6 +5,9 @@
   "repository": "https://github.com/Goldinteractive/fe-cli.git",
   "author": "Gold Interactive",
   "license": "MIT",
+  "engines": {
+    "node": ">=10"
+  },
   "private": false,
   "publishConfig": {
     "access": "public"
