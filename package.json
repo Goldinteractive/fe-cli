@@ -1,0 +1,12 @@
+{
+  "name": "@goldinteractive/cli",
+  "version": "0.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/Goldinteractive/fe-cli.git",
+  "author": "Gold Interactive",
+  "license": "MIT",
+  "private": false,
+  "publishConfig": {
+    "access": "public"
+  }
+}
