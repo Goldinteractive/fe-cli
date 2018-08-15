@@ -1,6 +1,6 @@
 {
   "name": "@goldinteractive/cli",
-  "version": "0.0.0-alpha.2",
+  "version": "0.0.0-alpha.3",
   "main": "scripts/index.js",
   "repository": "https://github.com/Goldinteractive/fe-cli.git",
   "author": "Gold Interactive",
@@ -8,10 +8,7 @@
   "scripts": {
     "setup": "node ./scripts/index.js setup"
   },
-  "bin": {
-    "cli": "./scripts/index.js",
-    "@goldinteractive/cli": "./scripts/index.js"
-  },
+  "bin": "./scripts/index.js",
   "devDependencies": {},
   "dependencies": {},
   "engines": {
