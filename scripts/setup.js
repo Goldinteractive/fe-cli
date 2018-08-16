@@ -51,8 +51,10 @@ const buildAuthHeader = (username, password) => {
 }
 
 const readBasicAuthFile = async url => {
+  console.log(`Authentication is required for '${url}'.`)
   const username = await question({ question: 'Username: ' })
   const password = await question({ question: 'Password: ', isMuted: true })
+  console.log('loading with credentials')
   const headers = buildAuthHeader(username, password)
   await curlZip({
     destination: FACADE_DOWNLOAD_PATH,
@@ -263,7 +265,8 @@ const setupFacade = async (facadeConfiguration, cwd) => {
   makeTmpDir()
 
   const url = facadeConfiguration.url
-
+  
+  console.info('download facade')
   switch (facadeConfiguration.auth) {
     case 'basic':
       await readBasicAuthFile(url)
@@ -275,9 +278,12 @@ const setupFacade = async (facadeConfiguration, cwd) => {
       assert.fail(`'${facadeConfiguration.auth}' is an unknown auth method`)
   }
 
+
+  console.info('unzip facade')
   const extractedFolderName = path.join(tmpDir, 'extracted')
   await exec(`unzip -q -o ${FACADE_DOWNLOAD_PATH} -d ${extractedFolderName}`)
 
+  console.info('apply facade')
   const files = fs.readdirSync(extractedFolderName)
   assert.equal(
     files.length,
@@ -291,6 +297,7 @@ const setupFacade = async (facadeConfiguration, cwd) => {
 
   await applyFacadeManifest(folderName, cwd)
 
+  console.info('delete tmp folder')
   deleteTmpDir()
 }
 
