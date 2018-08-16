@@ -316,7 +316,7 @@ module.exports = async (facade, cwd = './') => {
   )
 
   // fetch registry
-  const registryResponse = await exec(`curl -q ${config.registry}`)
+  const registryResponse = await exec(`curl -L -q ${config.registry}`)
   const registry = parseJson(registryResponse.stdout)
 
   assert.notStrictEqual(
