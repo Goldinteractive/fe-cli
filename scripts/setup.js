@@ -276,7 +276,7 @@ const setupFacade = async (facadeConfiguration, cwd) => {
   }
 
   const extractedFolderName = path.join(tmpDir, 'extracted')
-  await exec(`unzip -o ${FACADE_DOWNLOAD_PATH} -d ${extractedFolderName}`)
+  await exec(`unzip -q -o ${FACADE_DOWNLOAD_PATH} -d ${extractedFolderName}`)
 
   const files = fs.readdirSync(extractedFolderName)
   assert.equal(
