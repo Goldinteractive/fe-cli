@@ -20,7 +20,7 @@ with optional custom working directory
 
 ```
 {
-    "registry": "https://github.com/bliblablub"
+    "registry": "https://bitbucket.org/!api/2.0/snippets/goldinteractive/LenKoB/files/registry.json"
 }
 ```
 
