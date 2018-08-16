@@ -308,16 +308,29 @@ module.exports = async (facade, cwd = './') => {
   // read config
   const file = `${homedir}/${configFileName}`
 
-  const config = await getJsonFileContent(file)
+  const config = await getJsonFileContent(
+    file,
+    `Did not find ${file}. Please create this file. (execute 'touch ${file}')`,
+    {
+      mustExist: true,
+      jsonParseDetailMessage:
+        `Could not parse ${file}. Make sure it contains valid JSON.`
+    }
+  )
   assert.notStrictEqual(
     config.registry,
     undefined,
-    'config.registry must be configured.'
+    `${file} does not contain key 'registry'. Make sure you set a url to the registry.`
   )
 
   // fetch registry
   const registryResponse = await exec(`curl -L -q ${config.registry}`)
-  const registry = parseJson(registryResponse.stdout)
+  const registry = parseJson({
+    string: registryResponse.stdout,
+    jsonParseDetailMessage: `The registry could not be read, please check it contains valid JSON formatted data. Tried to fetch ${
+      config.registry
+    }`
+  })
 
   assert.notStrictEqual(
     registry,
@@ -331,7 +344,7 @@ module.exports = async (facade, cwd = './') => {
   assert.notStrictEqual(
     facadeConfiguration,
     undefined,
-    `${facade} is unknown in registry ${config.registry}`
+    `entry '${facade}' is unknown in registry ${config.registry}`
   )
 
   await setupFacade(facadeConfiguration, cwd)

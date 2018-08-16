@@ -4,18 +4,18 @@ const assert = require('assert')
 
 const ENCODING = 'utf8'
 
-const parseJson = string => {
+const parseJson = ({string, jsonParseDetailMessage = null}) => {
   try {
     return JSON.parse(string)
   } catch (e) {
     // TODO: readable message
-    assert.fail(e)
+    assert.fail(!!jsonParseDetailMessage ? `${jsonParseDetailMessage}\n${e}` : e)
   }
 }
 
-const getJsonFileContent = async (file, message, { mustExist } = {}) => {
+const getJsonFileContent = async (file, message, { mustExist, jsonParseDetailMessage } = {}) => {
   const exists = await assertFileExists(file, { message, mustExist })
-  return exists ? parseJson(fs.readFileSync(file, ENCODING)) : {}
+  return exists ? parseJson({ string: fs.readFileSync(file, ENCODING), jsonParseDetailMessage }) : {}
 }
 
 const writeJsonFileContent = async (file, object) => {
