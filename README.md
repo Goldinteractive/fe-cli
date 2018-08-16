@@ -1,16 +1,20 @@
-# FE CLI
+# Gold Frontend CLI 👾
 
-CLI to ease project setup and maintenance
+This CLI enables you to create and maintain projects using `facades`.
+
+A `facade` is a part of an application providing some functionality. The goal is to easily setup a project using multiple facades and being able to udpate them individually.
 
 ## Dependencies
 
-> Node v10
+> Node v10, `yarn`, `curl`, `unzip`
 
 ## Setup
 
-We've got good news for you: you don't have to download yet another global package 🎉
+We've got good news for you: There is no need to download yet another global package 🎉
 
-One thing you have to configure however is your local `.goldclirc` file. It must be located in your home directory and shall contain a secured link to the registry.
+> Because `fe-cli` is dependency free it's really fast to download it.
+
+One thing you have to configure however is your local `.goldclirc` file. It must be located in your home directory and must contain a registry link.
 
 For the Gold Facades this would be:
 
@@ -24,7 +28,7 @@ For the Gold Facades this would be:
 ## Commands
 
 The CLI has two main commands:
- - `setup` - to initialize or update a project 
+ - `setup` - to initialize or update a project
  - `build` - to build manifest information for a facade
 
 ### `setup`
@@ -41,12 +45,34 @@ In order to set up the `sackmesser` facade (`sm`):
 
 This command initializes a `manifest.json`. Please note, that you still have to do `whiteList` and `id` configuration by yourself.
 
+Currently it only extracts the dependencies into the manifest.
+
 `npx gold-cli build`
 
 ## Structure
 
-Registry:
+### Registry
 
+A registry is an object containing children using this structure:
+
+| property      | required      | example  | description |
+| ------------- |:-------------:| ---------| ------------|
+| `name`          | ➖             | sackmesser | the full name for the given facade |
+| `url`           | ✅             | https://github.com/Goldinteractive/Sackmesser/archive/release.zip | a url where you can find the zip. |
+| `auth`          | ✅             | `basic` or `none` | how to fetch the url |
+| `workspace`     | ➖             | `anyDirectory/evenNested` | when the zip is extracted, where is the actual source of the repository? |
+
+Note that the `key` of the given child represents the name one has to pass to the CLI.
+
+In order to run `setup xyz` one has to configure the registry as:
+
+```
+{
+    "xyz": { name, url, auth, workspace }
+}
+```
+
+A more specific example:
 ```
 {
     "sm": {
@@ -57,7 +83,7 @@ Registry:
     "bp": {
       name: 'blueprint',
       url: 'https://bitbucket.org/goldinteractive/craft-blueprint/get/master.zip',
-      auth: 'basic',
+      auth: 'basic', // <- prompt for username and password 
       workspace: 'src' // <- location where the actual project is within the repo
     },
     "em": {
@@ -66,8 +92,16 @@ Registry:
 }
 ```
 
-Manifest:
+### Manifest
 
+The manifest represents the meta information of a project as well as a facade (Facades act as projects as well)
+
+The following sections explain the different parts of a manifest.
+
+
+#### Extension
+
+A project can use multiple facades, in order to set it up correctly apply them in the _logical_ order and it will generate the corresponding `extends` configuration for you.
 ```
 {
     extends: ["sm", "bp", "em"]
@@ -76,23 +110,31 @@ Manifest:
 
 #### Copy
 
-These lists are regex! So make sure to escape where required...
+A facade must configure the assets which shall be copied upon setup.
+
+> The entries of the lists are treated as regex! So make sure to escape where required.
+
+> All files are tested against these lists, so the file `/package.json` will be checked as `package.json` 
 
 ```
 {
-    // exclusive
-    "whiteList" | "blackList": ["globs"],
+    // XOR (only one of both)
+    "whiteList" | "blackList": ["regex"],
 
     // optional -> copy only if it does not exist yet
-    "preserveList": ["globs"]
+    "preserveList": ["regex"]
 }
 ```
 
 #### Dependencies
 
-Read and parse package.json, extend where required
+The `build` script automatically generates the `dependencies` and `devDependencies` section of the given manifest.
+
+On installation it will match the given dependencies and install the ones which are missing.
 
 #### Merge
+
+Merge specific snippets of a file
 
 > this is not yet implemented!
 
