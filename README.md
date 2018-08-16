@@ -36,7 +36,8 @@ Registry:
     "bp": {
       name: 'blueprint',
       url: 'https://bitbucket.org/goldinteractive/craft-blueprint/get/master.zip',
-      auth: 'basic'
+      auth: 'basic',
+      workspace: 'src' // <- location where the actual project is within the repo
     },
     "em": {
         ...

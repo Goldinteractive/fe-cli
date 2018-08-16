@@ -293,7 +293,7 @@ const setupFacade = async (facadeConfiguration, cwd) => {
     } files. Make sure the ${tmpDir} is clean and the facade package contains only one root directory`
   )
 
-  const folderName = path.join(extractedFolderName, files[0])
+  const folderName = path.join(extractedFolderName, files[0], facadeConfiguration.workspace || '')
 
   await applyFacadeManifest(folderName, cwd)
 
