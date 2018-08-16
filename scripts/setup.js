@@ -230,7 +230,7 @@ const installMissingDependencies = async (
   )
 }
 
-const installMismatchDependencies = async (source, dest, flag, destDir) => {
+const installMismatchDependencies = async (source, dest = {}, flag, destDir) => {
   let dependencyString = ''
   for (let dependency in source) {
     // TODO: check version & check if any dependencies exist at all...
