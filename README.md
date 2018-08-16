@@ -1,20 +1,22 @@
 # FE CLI
 
-Cli to ease project setup and maintenance
-
-This is currently a **wip**
+CLI to ease project setup and maintenance
 
 ## Dependencies
 
 > Node v10
 
-### CLI
+### How to Use
 
-with optional custom working directory
-`setup sm`
-`build-manifest`
+We've got good news for you: you don't have to download yet another global package 🎉
 
-### Structure
+The CLI has two main commands:
+ - `setup` - to initialize or update a project 
+ - `build` - to build manifest information for a facade
+
+One thing you have to configure however is your local `.goldclirc` file. It must be located in your home directory and shall contain a secured link to the registry.
+
+For the Gold Facades this would be:
 
 `.goldclirc`
 
@@ -23,6 +25,8 @@ with optional custom working directory
     "registry": "https://bitbucket.org/!api/2.0/snippets/goldinteractive/LenKoB/files/registry.json"
 }
 ```
+
+### Structure
 
 Registry:
 
