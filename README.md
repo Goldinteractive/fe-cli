@@ -1,5 +1,7 @@
 # Gold Frontend CLI 👾
 
+[![Maintainability](https://api.codeclimate.com/v1/badges/7f8e0ed42be79c218158/maintainability)](https://codeclimate.com/github/Goldinteractive/fe-cli/maintainability)
+
 This CLI enables you to create and maintain projects using `facades`.
 
 A `facade` is a part of an application providing some functionality. The goal is to easily setup a project using multiple facades and being able to udpate them individually.
