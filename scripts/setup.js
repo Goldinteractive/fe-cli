@@ -254,6 +254,9 @@ const buildManifest = async ({ cwd, appliedManifest }) => {
   const manifest = alreadyHasManifest
     ? await getJsonFileContent(manifestLocation)
     : await buildEmptyManifest()
+  if (!manifest.extends) {
+    manifest.extends = []
+  }
   if (!manifest.extends.includes(appliedManifest.id)) {
     manifest.extends.push(appliedManifest.id)
   }
