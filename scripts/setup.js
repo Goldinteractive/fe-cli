@@ -19,6 +19,7 @@ const {
   manifestFileName
 } = require('./config/constants')
 const question = require('./helpers/question')
+const { handleResponseCode } = require('./helpers/responseCode')
 
 const FACADE_DOWNLOAD_NAME = 'facadeDownload.zip'
 const FACADE_DOWNLOAD_PATH = path.join(tmpDir, FACADE_DOWNLOAD_NAME)
@@ -41,8 +42,16 @@ const curlZip = async ({ destination, url, additionalParam = '' }) => {
     url.includes(HTTPS_PREFIX),
     `facade url must start with ${HTTPS_PREFIX}`
   )
-  const curlCommand = `curl -L -o ${destination} ${additionalParam} ${url}`
-  await exec(curlCommand)
+  const curlCommand = `curl -s -L -w "%{http_code}" -o ${destination} ${additionalParam} ${url}`
+
+  const { stdout } = await exec(curlCommand)
+
+  const { failed, message } = handleResponseCode(stdout)
+  if (failed) {
+    assert.fail(
+      `there is an error fetching the zip, tried to fetch ${url}. ${message}`
+    )
+  }
 }
 
 const buildAuthHeader = (username, password) => {
