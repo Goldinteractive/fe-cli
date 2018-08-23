@@ -6,15 +6,17 @@ This CLI enables you to create and maintain projects using `facades`.
 
 A `facade` is a part of an application providing some functionality. The goal is to easily setup a project using multiple facades and being able to udpate them individually.
 
-## Dependencies
+## Setup
+
+### Dependencies
 
 > Node v10, `yarn`, `curl`, `unzip`
 
-## Setup
+### "Installation"
 
 We've got good news for you: There is no need to download yet another global package 🎉
 
-> Because `fe-cli` is dependency free it's really fast to download it.
+> Because `fe-cli` does not have any npm dependencies it's really fast to download.
 
 One thing you have to configure however is your local `.goldclirc` file. It must be located in your home directory and must contain a registry link.
 
@@ -133,6 +135,8 @@ A facade must configure the assets which shall be copied upon setup.
 The `build` script automatically generates the `dependencies` and `devDependencies` section of the given manifest.
 
 On installation it will match the given dependencies and install the ones which are missing.
+
+> It will not compare the versions. So in case of a major update you might have to delete the dependencies in your `package.json`.
 
 #### Merge
 
