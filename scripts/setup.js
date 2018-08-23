@@ -241,7 +241,12 @@ const installMissingDependencies = async (
   )
 }
 
-const installMismatchDependencies = async (source, dest = {}, flag, destDir) => {
+const installMismatchDependencies = async (
+  source,
+  dest = {},
+  flag,
+  destDir
+) => {
   let dependencyString = ''
   for (let dependency in source) {
     // TODO: check version & check if any dependencies exist at all...
@@ -330,8 +335,7 @@ module.exports = async (facade, cwd = './') => {
     `Did not find ${file}. Please create this file. (execute 'touch ${file}')`,
     {
       mustExist: true,
-      jsonParseDetailMessage:
-        `Could not parse ${file}. Make sure it contains valid JSON.`
+      jsonParseDetailMessage: `Could not parse ${file}. Make sure it contains valid JSON.`
     }
   )
   assert.notStrictEqual(
