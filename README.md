@@ -149,3 +149,16 @@ Merge specific snippets of a file
     }
 }
 ```
+
+## Development
+
+### Execute local version
+There is a npm script to run the cli locally: `npm run main setup xyz ...`
+
+### Publish version
+
+It's not required to run any build process before publishing.
+
+This package is published using `yarn publish`.
+
+> Note that the last published version will automatically be used by all consumers. So be careful when publishing.
