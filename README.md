@@ -1,5 +1,5 @@
 # Gold Frontend CLI 👾
-[![npm version](https://badge.fury.io/js/fe-cli.svg)](https://badge.fury.io/js/fe-cli)
+[![npm version](https://badge.fury.io/js/gold-cli.svg)](https://badge.fury.io/js/gold-cli)
 [![Maintainability](https://api.codeclimate.com/v1/badges/7f8e0ed42be79c218158/maintainability)](https://codeclimate.com/github/Goldinteractive/fe-cli/maintainability)
 
 This CLI enables you to create and maintain projects using `facades`.
