@@ -30,8 +30,9 @@ const makeTmpDir = async () => {
   try {
     await exec(`mkdir ${tmpDir}`)
   } catch (e) {
-    // When the folder exists, this will throw an execption
-    // In case we need to check the folder content, this would be the place to do so.
+    assert.fail(
+      `folder '${tmpDir}' does already exist. This folder must be used by the cli as a tmp working directory and will be deleted after it finished. Please delete this folder.`
+    )
   }
 }
 
@@ -76,7 +77,6 @@ const readNoneAuthFile = async url => {
   await curlZip({ destination: FACADE_DOWNLOAD_PATH, url })
 }
 
-// TODO: should be in finally stmt
 const deleteTmpDir = async () => {
   await exec(`rm -rf ${tmpDir}`)
 }
@@ -274,43 +274,48 @@ const buildManifest = async ({ cwd, appliedManifest }) => {
 }
 
 const setupFacade = async (facadeConfiguration, cwd) => {
-  makeTmpDir()
+  await makeTmpDir()
 
-  const url = facadeConfiguration.url
-  
-  console.info('download facade')
-  switch (facadeConfiguration.auth) {
-    case 'basic':
-      await readBasicAuthFile(url)
-      break
-    case 'none':
-      await readNoneAuthFile(url)
-      break
-    default:
-      assert.fail(`'${facadeConfiguration.auth}' is an unknown auth method`)
+  try {
+    const url = facadeConfiguration.url
+
+    console.info('download facade')
+    switch (facadeConfiguration.auth) {
+      case 'basic':
+        await readBasicAuthFile(url)
+        break
+      case 'none':
+        await readNoneAuthFile(url)
+        break
+      default:
+        assert.fail(`'${facadeConfiguration.auth}' is an unknown auth method`)
+    }
+
+    console.info('unzip facade')
+    const extractedFolderName = path.join(tmpDir, 'extracted')
+    await exec(`unzip -q -o ${FACADE_DOWNLOAD_PATH} -d ${extractedFolderName}`)
+
+    console.info('apply facade')
+    const files = fs.readdirSync(extractedFolderName)
+    assert.equal(
+      files.length,
+      1,
+      `expected one file in extracted zip, found ${
+        files.length
+      } files. Make sure the ${tmpDir} is clean and the facade package contains only one root directory`
+    )
+
+    const folderName = path.join(
+      extractedFolderName,
+      files[0],
+      facadeConfiguration.workspace || ''
+    )
+
+    await applyFacadeManifest(folderName, cwd)
+  } finally {
+    console.info('delete tmp folder')
+    await deleteTmpDir()
   }
-
-
-  console.info('unzip facade')
-  const extractedFolderName = path.join(tmpDir, 'extracted')
-  await exec(`unzip -q -o ${FACADE_DOWNLOAD_PATH} -d ${extractedFolderName}`)
-
-  console.info('apply facade')
-  const files = fs.readdirSync(extractedFolderName)
-  assert.equal(
-    files.length,
-    1,
-    `expected one file in extracted zip, found ${
-      files.length
-    } files. Make sure the ${tmpDir} is clean and the facade package contains only one root directory`
-  )
-
-  const folderName = path.join(extractedFolderName, files[0], facadeConfiguration.workspace || '')
-
-  await applyFacadeManifest(folderName, cwd)
-
-  console.info('delete tmp folder')
-  deleteTmpDir()
 }
 
 module.exports = async (facade, cwd = './') => {
