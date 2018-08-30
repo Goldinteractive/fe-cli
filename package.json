@@ -6,10 +6,13 @@
   "author": "Gold Interactive",
   "license": "MIT",
   "scripts": {
+    "test": "jest",
     "main": "node ./scripts/index.js"
   },
   "bin": "./scripts/index.js",
-  "devDependencies": {},
+  "devDependencies": {
+    "jest": "^23.5.0"
+  },
   "dependencies": {},
   "engines": {
     "node": ">=10"
