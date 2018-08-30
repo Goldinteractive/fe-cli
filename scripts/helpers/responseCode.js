@@ -4,8 +4,12 @@ const UNAUTHORIZED = 401
 const NOT_FOUND = 404
 
 const fail = message => ({
-  failed: true,
+  success: false,
   message
+})
+
+const succeed = () => ({
+  success: true
 })
 
 const handleResponseCode = responseCode => {
@@ -16,9 +20,7 @@ const handleResponseCode = responseCode => {
     assert.fail(`expected response code to be integer, got ${responseCode}`)
   }
   if (code < 400) {
-    return {
-      failed: false
-    }
+    return succeed()
   }
   switch (code) {
     case UNAUTHORIZED:

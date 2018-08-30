@@ -47,7 +47,8 @@ const curlZip = async ({ destination, url, additionalParam = '' }) => {
 
   const { stdout } = await exec(curlCommand)
 
-  const { failed, message } = handleResponseCode(stdout)
+  const { success, message } = handleResponseCode(stdout)
+  const failed = !success
   if (failed) {
     assert.fail(
       `there is an error fetching the zip, tried to fetch ${url}. ${message}`
