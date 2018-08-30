@@ -13,10 +13,8 @@ const succeed = () => ({
 })
 
 const handleResponseCode = responseCode => {
-  let code
-  try {
-    code = parseInt(responseCode)
-  } catch (e) {
+  let code = parseInt(responseCode)
+  if (isNaN(code)) {
     assert.fail(`expected response code to be integer, got ${responseCode}`)
   }
   if (code < 400) {
