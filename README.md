@@ -159,9 +159,14 @@ Merge specific snippets of a file
 ### Execute local version
 There is a npm script to run the cli locally: `npm run main setup xyz ...`
 
+### Run tests
+This project uses Jest for unit testing, simply run: `yarn run test`.
+
 ### Publish version
 
 It's not required to run any build process before publishing.
+
+Just be sure to run the tests before publishing.
 
 This package is published using `yarn publish`.
 
