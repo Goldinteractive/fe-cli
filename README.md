@@ -53,6 +53,8 @@ Currently it only extracts the dependencies into the manifest.
 
 `npx gold-cli build`
 
+> You can also set the working directory, but make sure it does already exist!
+
 ## Structure
 
 ### Registry
