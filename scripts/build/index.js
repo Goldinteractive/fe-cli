@@ -3,8 +3,8 @@ const {
   getPackageJson,
   getJsonFileContent,
   writeJsonFileContent
-} = require('./helpers/common')
-const { manifestFileName } = require('./config/constants')
+} = require('../helpers/common')
+const { manifestFileName } = require('../config/constants')
 
 module.exports = async (cwd = './') => {
   const package = await getPackageJson(cwd)

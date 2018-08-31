@@ -11,15 +11,15 @@ const {
   writeJsonFileContent,
   getPackageJson,
   parseJson
-} = require('./helpers/common')
-const { buildEmptyManifest } = require('./helpers/manifest')
+} = require('../helpers/common')
+const { buildEmptyManifest } = require('../helpers/manifest')
 const {
   configFileName,
   tmpDir,
   manifestFileName
-} = require('./config/constants')
-const question = require('./helpers/question')
-const { handleResponseCode } = require('./helpers/responseCode')
+} = require('../config/constants')
+const question = require('../helpers/question')
+const { handleResponseCode } = require('../helpers/responseCode')
 
 const FACADE_DOWNLOAD_NAME = 'facadeDownload.zip'
 const FACADE_DOWNLOAD_PATH = path.join(tmpDir, FACADE_DOWNLOAD_NAME)
