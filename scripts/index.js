@@ -13,6 +13,8 @@ switch (command) {
     break
 
   default:
-    console.error('unknown command, use either setup or build')
+    console.log('Available Commands:')
+    console.log('setup <facade> [working directory]')
+    console.log('build [working directory]')
     break
 }
