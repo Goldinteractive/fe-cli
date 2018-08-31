@@ -47,7 +47,7 @@ In order to set up the `sackmesser` facade (`sm`):
 
 ### `build`
 
-This command initializes a `manifest.json`. Please note, that you still have to do `whiteList` and `id` configuration by yourself.
+This command initializes a `manifest.json`. Please note, that you still have to do `whiteList` (or `blackList`) and `id` configuration by yourself.
 
 Currently it only extracts the dependencies into the manifest.
 
