@@ -16,15 +16,10 @@ const { buildEmptyManifest } = require('../helpers/manifest')
 const {
   configFileName,
   tmpDir,
-  manifestFileName
+  manifestFileName,
+  facadeDownloadPath
 } = require('../config/constants')
-const question = require('../helpers/question')
-const { handleResponseCode } = require('../helpers/responseCode')
-
-const FACADE_DOWNLOAD_NAME = 'facadeDownload.zip'
-const FACADE_DOWNLOAD_PATH = path.join(tmpDir, FACADE_DOWNLOAD_NAME)
-
-const HTTPS_PREFIX = 'https://'
+const { downloadFacadeConfiguration } = require('./facade-download-helper')
 
 const makeTmpDir = async () => {
   try {
@@ -36,47 +31,7 @@ const makeTmpDir = async () => {
   }
 }
 
-const curlZip = async ({ destination, url, additionalParam = '' }) => {
-  assert.notStrictEqual(destination, undefined)
-  assert.notStrictEqual(url, undefined)
-  assert.ok(
-    url.includes(HTTPS_PREFIX),
-    `facade url must start with ${HTTPS_PREFIX}`
-  )
-  const curlCommand = `curl -s -L -w "%{http_code}" -o ${destination} ${additionalParam} ${url}`
 
-  const { stdout } = await exec(curlCommand)
-
-  const { success, message } = handleResponseCode(stdout)
-  const failed = !success
-  if (failed) {
-    assert.fail(
-      `there is an error fetching the zip, tried to fetch ${url}. ${message}`
-    )
-  }
-}
-
-const buildAuthHeader = (username, password) => {
-  const base64 = Buffer.from(`${username}:${password}`).toString('base64')
-  return `-H "Authorization: Basic ${base64}"`
-}
-
-const readBasicAuthFile = async url => {
-  console.log(`Authentication is required for '${url}'.`)
-  const username = await question({ question: 'Username: ' })
-  const password = await question({ question: 'Password: ', isMuted: true })
-  console.log('loading with credentials')
-  const headers = buildAuthHeader(username, password)
-  await curlZip({
-    destination: FACADE_DOWNLOAD_PATH,
-    url,
-    additionalParam: headers
-  })
-}
-
-const readNoneAuthFile = async url => {
-  await curlZip({ destination: FACADE_DOWNLOAD_PATH, url })
-}
 
 const deleteTmpDir = async () => {
   await exec(`rm -rf ${tmpDir}`)
@@ -283,23 +238,11 @@ const setupFacade = async (facadeConfiguration, cwd) => {
   await makeTmpDir()
 
   try {
-    const url = facadeConfiguration.url
-
-    console.info('download facade')
-    switch (facadeConfiguration.auth) {
-      case 'basic':
-        await readBasicAuthFile(url)
-        break
-      case 'none':
-        await readNoneAuthFile(url)
-        break
-      default:
-        assert.fail(`'${facadeConfiguration.auth}' is an unknown auth method`)
-    }
+    await downloadFacadeConfiguration(facadeConfiguration)
 
     console.info('unzip facade')
     const extractedFolderName = path.join(tmpDir, 'extracted')
-    await exec(`unzip -q -o ${FACADE_DOWNLOAD_PATH} -d ${extractedFolderName}`)
+    await exec(`unzip -q -o ${facadeDownloadPath} -d ${extractedFolderName}`)
 
     console.info('apply facade')
     const files = fs.readdirSync(extractedFolderName)
