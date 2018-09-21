@@ -120,7 +120,9 @@ A facade must configure the assets which shall be copied upon setup.
 
 > The entries of the lists are treated as regex! So make sure to escape where required.
 
-> All files are tested against these lists, so the file `/package.json` will be checked as `package.json` 
+> All files are tested against these lists, so the file `/package.json` will be checked as `package.json`
+
+If you want to copy a root directory, you can use the `^` syntax. So e.g. to copy the `frontend` use `^frontend` as regex.
 
 ```
 {
