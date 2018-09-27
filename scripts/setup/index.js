@@ -12,6 +12,7 @@ const {
   getPackageJson,
   parseJson
 } = require('../helpers/common')
+const question = require('../helpers/question')
 const { buildEmptyManifest } = require('../helpers/manifest')
 const {
   configFileName,
@@ -30,8 +31,6 @@ const makeTmpDir = async () => {
     )
   }
 }
-
-
 
 const deleteTmpDir = async () => {
   await exec(`rm -rf ${tmpDir}`)
@@ -268,6 +267,15 @@ const setupFacade = async (facadeConfiguration, cwd) => {
 }
 
 module.exports = async (facade, cwd = './') => {
+  const fullWorkingDirectory = path.join(process.cwd(), cwd)
+  const confirm = await question({
+    question: `Do you want to install into '${fullWorkingDirectory}'? y/n >`
+  })
+  if (confirm !== 'y') {
+    console.log('No setup executed.')
+    return
+  }
+
   // validation
   assert.notStrictEqual(facade, undefined, 'please provide a facade identifier')
 
