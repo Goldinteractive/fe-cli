@@ -21,6 +21,7 @@ const {
   facadeDownloadPath
 } = require('../config/constants')
 const { downloadFacadeConfiguration } = require('./facade-download-helper')
+const { validateManifest } = require('./validate')
 
 const makeTmpDir = async () => {
   try {
@@ -63,23 +64,6 @@ const fileExists = async file => {
   } catch (e) {
     return false
   }
-}
-
-const validateManifest = manifest => {
-  // TODO: check manifest.id is same as argv
-  assert.notStrictEqual(
-    manifest.id,
-    undefined,
-    'facade which is being applied does not contain any id - please make sure the facade has a proper manifest'
-  )
-  assert.ok(
-    manifest.whiteList === undefined || manifest.blackList === undefined,
-    'only either whiteList or blackList may be set - but not both'
-  )
-  assert.ok(
-    manifest.whiteList !== undefined || manifest.blackList !== undefined,
-    'either whiteList or blackList must be set (but not both)'
-  )
 }
 
 const processStringListToRegexList = list => {
