@@ -120,7 +120,7 @@ const applyFacadeManifest = async (facadeLocation, cwd) => {
   assert.notStrictEqual(
     files,
     undefined,
-    'sorry, it seems as if there are no files in the release folder'
+    'sorry, it seems as if there are no files in the facade location'
   )
 
   for await (let file of files) {
