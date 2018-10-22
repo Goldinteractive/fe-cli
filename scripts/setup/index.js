@@ -188,7 +188,8 @@ const installMismatchDependencies = async (
 ) => {
   let dependencyString = ''
   for (let dependency in source) {
-    // TODO: check version & check if any dependencies exist at all...
+    // TODO: check if any dependencies exist at all...
+    // TODO: install new version if manifest contains newer version than package.json
     if (!dest[dependency]) {
       const version = source[dependency]
       dependencyString += ` ${dependency}@${version}`
