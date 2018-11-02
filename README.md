@@ -102,6 +102,18 @@ A more specific example:
 
 The manifest represents the meta information of a project as well as a facade (Facades act as projects as well)
 
+This is a quick overview of the different properties. See the sections below for more detailed information.
+
+| property      | required      | type  | info |
+| ------------- |:-------------:| ---------| ------------|
+| `id`          | ✅             | string | unique id matching the registry key |
+| `extends`          | ➖            | string | See `extension` section |
+| `blackList`           | (➖)            | regex array | See `copy` section |
+| `whiteList`          | (➖)             | regex array | See `copy` section |
+| `preserveList`     | (➖)             | regex array | See `copy` section |
+| `dependencies`     | ➖             | object | automatically generated using the `build` command. |
+| `devDependencies`     | ➖             | object | automatically generated using the `build` command. |
+
 The following sections explain the different parts of a manifest.
 
 
