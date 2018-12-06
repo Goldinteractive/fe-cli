@@ -22,6 +22,7 @@ const {
 } = require('../config/constants')
 const { downloadFacadeConfiguration } = require('./facade-download-helper')
 const { validateManifest } = require('./validate')
+const { getFolderStatus, folderStates } = require('./folder-status')
 
 const makeTmpDir = async () => {
   try {
@@ -259,6 +260,25 @@ module.exports = async (facade, cwd = './') => {
   if (!wantsToContinue) {
     console.log('No setup executed.')
     return
+  }
+
+  const folderState = await getFolderStatus(cwd)
+
+  switch (folderState) {
+    case folderStates.NON_GIT:
+    case folderStates.GIT_CLEAN:
+      break
+    case folderStates.GIT_WIP:
+      const wantsToContinue = await confirm({
+        sentence: `Git status is not empty. There appears to be uncommited progress, do you want to continue with the setup?`
+      })
+      if (!wantsToContinue) {
+        console.log('No setup executed.')
+        return
+      }
+      break
+    default:
+      break
   }
 
   // validation
