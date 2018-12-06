@@ -10,7 +10,7 @@ A `facade` is a part of an application providing some functionality. The goal is
 
 ### Dependencies
 
-> Node v10, `yarn`, `curl`, `unzip`
+> Node v10, `yarn`, `git`, `curl`, `unzip`
 
 ### "Installation"
 
