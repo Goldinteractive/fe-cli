@@ -12,7 +12,7 @@ const {
   getPackageJson,
   parseJson
 } = require('../helpers/common')
-const question = require('../helpers/question')
+const confirm = require('../helpers/confirm')
 const { buildEmptyManifest } = require('../helpers/manifest')
 const {
   configFileName,
@@ -253,10 +253,10 @@ const setupFacade = async (facadeConfiguration, cwd) => {
 
 module.exports = async (facade, cwd = './') => {
   const fullWorkingDirectory = path.join(process.cwd(), cwd)
-  const confirm = await question({
-    question: `Do you want to install "${facade}" into '${fullWorkingDirectory}'? y/n >`
+  const wantsToContinue = await confirm({
+    sentence: `Do you want to install "${facade}" into '${fullWorkingDirectory}'?`
   })
-  if (confirm !== 'y') {
+  if (!wantsToContinue) {
     console.log('No setup executed.')
     return
   }
