@@ -184,6 +184,10 @@ It's not required to run any build process before publishing.
 
 Just be sure to run the tests before publishing.
 
-This package is published using `yarn publish`.
+This package is published using:
+
+`yarn publish`
+
+`git push --tags`
 
 > Note that the last published version will automatically be used by all consumers. So be careful when publishing.
