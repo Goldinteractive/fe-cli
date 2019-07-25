@@ -109,13 +109,8 @@ const applyFacadeManifest = async (facadeLocation, cwd) => {
   )
 
   validateManifest(manifest)
-  const {
-    blackList,
-    whiteList,
-    preserveList = [],
-    dependencies,
-    devDependencies
-  } = processManifest(manifest)
+  const { blackList, whiteList, preserveList = [] } = processManifest(manifest)
+  const { dependencies, devDependencies } = await getPackageJson(facadeLocation)
 
   const files = await walk(facadeLocation)
   assert.notStrictEqual(

@@ -45,11 +45,11 @@ In order to set up the `sackmesser` facade (`sm`):
 
 > If you want to set the working directory, pass it as second argument: `npx gold-cli setup sm new-project-directory`
 
-### `build`
+### `build` [![Generic badge](https://img.shields.io/badge/STATE-DEPRECATED-RED.svg)](https://github.com/Goldinteractive/fe-cli)
 
 This command initializes a `manifest.json`. Please note, that you still have to do `whiteList` (or `blackList`) and `id` configuration by yourself.
 
-Currently it only extracts the dependencies into the manifest.
+> This command was responsible for copying dev & dependencies - but this is now handled by automatically using the `package.json` file.
 
 `npx gold-cli build`
 
