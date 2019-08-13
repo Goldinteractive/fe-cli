@@ -18,7 +18,7 @@ We've got good news for you: There is no need to download yet another global pac
 
 > Because `fe-cli` does not have any npm dependencies it's really fast to download.
 
-One thing you have to configure however is your local `.goldclirc` file. It must be located in your home directory and must contain a registry link.
+One thing you have to configure however is your local `.goldclirc` file. *It must be located in your home directory and must contain a registry link*.
 
 For the Gold Facades this would be:
 
