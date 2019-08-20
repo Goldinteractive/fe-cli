@@ -111,8 +111,8 @@ This is a quick overview of the different properties. See the sections below for
 | `blackList`           | (➖)            | regex array | See `copy` section |
 | `whiteList`          | (➖)             | regex array | See `copy` section |
 | `preserveList`     | (➖)             | regex array | See `copy` section |
-| `dependencies`     | ➖             | object | automatically generated using the `build` command. |
-| `devDependencies`     | ➖             | object | automatically generated using the `build` command. |
+| `dependencies`     | ➖             | object | [![Generic badge](https://img.shields.io/badge/STATE-DEPRECATED-RED.svg)](https://github.com/Goldinteractive/fe-cli) automatically generated using the `build` command. |
+| `devDependencies`     | ➖             | object | [![Generic badge](https://img.shields.io/badge/STATE-DEPRECATED-RED.svg)](https://github.com/Goldinteractive/fe-cli) automatically generated using the `build` command. |
 
 The following sections explain the different parts of a manifest.
 
