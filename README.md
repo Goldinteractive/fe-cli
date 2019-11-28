@@ -31,9 +31,8 @@ For the Gold Facades this would be:
 
 ## Commands
 
-The CLI has two main commands:
+The CLI has one main command:
  - `setup` - to initialize or update a project
- - `build` - to build manifest information for a facade
 
 ### `setup`
 
@@ -44,16 +43,6 @@ In order to set up the `sackmesser` facade (`sm`):
 `npx gold-cli setup sm`
 
 > If you want to set the working directory, pass it as second argument: `npx gold-cli setup sm new-project-directory`
-
-### `build` [![Generic badge](https://img.shields.io/badge/STATE-DEPRECATED-RED.svg)](https://github.com/Goldinteractive/fe-cli)
-
-This command initializes a `manifest.json`. Please note, that you still have to do `whiteList` (or `blackList`) and `id` configuration by yourself.
-
-> This command was responsible for copying dev & dependencies - but this is now handled by automatically using the `package.json` file.
-
-`npx gold-cli build`
-
-> You can also set the working directory, but make sure it does already exist!
 
 ## Structure
 
@@ -111,8 +100,6 @@ This is a quick overview of the different properties. See the sections below for
 | `blackList`           | (➖)            | regex array | See `copy` section |
 | `whiteList`          | (➖)             | regex array | See `copy` section |
 | `preserveList`     | (➖)             | regex array | See `copy` section |
-| `dependencies`     | ➖             | object | [![Generic badge](https://img.shields.io/badge/STATE-DEPRECATED-RED.svg)](https://github.com/Goldinteractive/fe-cli) automatically generated using the `build` command. |
-| `devDependencies`     | ➖             | object | [![Generic badge](https://img.shields.io/badge/STATE-DEPRECATED-RED.svg)](https://github.com/Goldinteractive/fe-cli) automatically generated using the `build` command. |
 
 The following sections explain the different parts of a manifest.
 
@@ -143,30 +130,6 @@ If you want to copy a root directory, you can use the `^` syntax. So e.g. to cop
 
     // optional -> copy only if it does not exist yet
     "preserveList": ["regex"]
-}
-```
-
-#### Dependencies
-
-The `build` script automatically generates the `dependencies` and `devDependencies` section of the given manifest.
-
-On installation it will match the given dependencies and install the ones which are missing.
-
-> It will not compare the versions. So in case of a major update you might have to delete the dependencies in your `package.json`.
-
-#### Merge
-
-Merge specific snippets of a file
-
-> this is not yet implemented!
-
-```
-{
-    "snippets": {
-        "frontend/js/main.js": {
-            "import": "import xyz from 'test';"
-        }
-    }
 }
 ```
 
