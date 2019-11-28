@@ -1,6 +1,6 @@
 {
   "name": "gold-cli",
-  "version": "0.0.2-beta.6",
+  "version": "0.1.0",
   "main": "scripts/index.js",
   "repository": "https://github.com/Goldinteractive/fe-cli.git",
   "author": "Gold Interactive",
