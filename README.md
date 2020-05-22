@@ -86,6 +86,15 @@ A more specific example:
     }
 }
 ```
+#### Authentication
+
+##### Bitbucket
+
+For Bitbucket you can not use your default credentials. Bitbucket uses a system called "App passwords".
+If the CLI prompts you with an username and password for objects hosted on Bitbucket you need to use
+your "App password" credentials.
+
+To create such credentials follow the link: https://confluence.atlassian.com/bitbucket/app-passwords-828781300.html
 
 ### Manifest
 
